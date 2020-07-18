@@ -1,11 +1,12 @@
 <template>
   <div id="app" :class="typeof weather.main != 'undefined' && weather.main.temp > 20 ? 'warm' :''">
     <main>
+      <div class="text">Weather App</div>
       <div class="search-box">
         <input
           type="text"
           class="search-bar"
-          placeholder="Search..."
+          placeholder="Enter Name of State or Country..."
           v-model="query"
           @keypress="fetchWeather"
         />
@@ -13,16 +14,25 @@
       <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
           <div class="location">{{weather.name}}, {{weather.sys.country}}</div>
-          <div class="date">{{dateBuilder()}}</div>
+          <div class="date">{{dateBuilder()}}, {{timeBuilder()}} (WAT) </div>
         </div>
 
         <div class="weather-box">
           <div class="temp">{{Math.round(weather.main.temp)}}°c</div>
           <div class="weather">{{weather.weather[0].main}}</div>
         </div>
+        
       </div>
+          <div class="foot"> 
+            <footer class="footer">Made with ❤️ by <a href="http://github.com/ayodelesalimon">Ayodele Salimonu</a>
+            </footer>
+            </div>
+ 
     </main>
+  <!-- <div> <footer class="footer">Made with ❤️ by <a href="http://github.com/ayodelesalimon">Ayodele Salimonu</a></footer></div> -->
+
   </div>
+  
 </template>
 
 <script>
@@ -49,6 +59,14 @@ export default {
     },
     setResults(results) {
       this.weather = results;
+    },
+
+    timeBuilder(){
+      let d = new Date();
+      let hour = d.getHours();
+      let minute = d.getMinutes();
+      
+       return ` ${hour}:${minute}` ;
     },
     dateBuilder() {
       let d = new Date();
@@ -80,8 +98,9 @@ export default {
       let date = d.getDate();
       let month = months[d.getMonth()];
       let year = d.getFullYear();
+      
 
-      return `${day} ${date} ${month} ${year}`;
+      return `${day} ${date} ${month} ${year} ` ;
     }
   }
 };
@@ -96,6 +115,14 @@ export default {
 }
 #app.warm {
   background-image: url("../assets/hot.jpg");
+}
+.text{
+  text-align: center;
+  font-size: 50px;
+  color: white;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-style: normal;
+  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
 * {
   margin: 0;
@@ -176,4 +203,20 @@ main {
 
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
+.footer {
+    
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+.footer a{
+    text-decoration: none;
+    color: white;
+    
+}
+.foot{
+   padding: 100px 250px;
+}
+
 </style>
